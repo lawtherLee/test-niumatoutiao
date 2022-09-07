@@ -1,6 +1,7 @@
 <template>
   <div>
     <router-view></router-view>
+
   </div>
 </template>
 
@@ -11,10 +12,4 @@
 export default {}
 </script>
 
-<style scoped>
-.btn {
-  width: 500px;
-  height: 88px;
-  background-color: skyblue;
-}
-</style>
+<style scoped></style>
