@@ -5,6 +5,29 @@ Vue.use(VueRouter)
 // SPA
 // 解决首屏加载慢的问题 路由懒加载（使用到路由页面再去请求）
 const routes = [
+  {
+    path: '/',
+    component: () => import('@/views/layout'),
+    redirect: '/ ',
+    children: [
+      {
+        path: '/ ',
+        component: () => import('@/views/Home')
+      },
+      {
+        path: '/video',
+        component: () => import(/* webpackChunkName: "base" */ '@/views/Video')
+      },
+      {
+        path: '/qa',
+        component: () => import(/* webpackChunkName: "base" */ '@/views/QA')
+      },
+      {
+        path: '/profile',
+        component: () => import('@/views/My')
+      }
+    ]
+  },
   // 配置登录页面路由
   {
     path: '/login',

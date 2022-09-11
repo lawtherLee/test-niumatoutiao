@@ -1,0 +1,71 @@
+<template>
+  <div>
+    <!--    二级路由-->
+    <router-view></router-view>
+    <!--    标签栏-->
+    <van-tabbar class="tabbar" route>
+      <!--      首页-->
+      <van-tabbar-item to="/ ">
+        <template #icon>
+          <span class="toutiao toutiao-shouye"></span>
+          <span class="text">首页</span>
+        </template>
+      </van-tabbar-item>
+      <!--      视频-->
+      <van-tabbar-item to="/video">
+        <template #icon>
+          <span class="toutiao toutiao-shipin"></span>
+          <span class="text">视频</span>
+        </template>
+      </van-tabbar-item>
+      <!--      问答-->
+      <van-tabbar-item to="/qa">
+        <template #icon>
+          <span class="toutiao toutiao-wenda"></span>
+          <span class="text">问答</span>
+        </template>
+      </van-tabbar-item>
+      <!--      我的-->
+      <van-tabbar-item to="/profile">
+        <template #icon>
+          <span class="toutiao toutiao-wode"></span>
+          <span class="text">{{ isLogin ? "我的" : "未登录" }}</span>
+        </template>
+      </van-tabbar-item>
+    </van-tabbar>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+  name: 'index',
+  data () {
+    return {}
+  },
+  computed: {
+    ...mapGetters(['isLogin'])
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.tabbar {
+  :deep(.van-tabbar-item__icon) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+  }
+
+  .toutiao {
+    font-size: 40px;
+  }
+
+  .text {
+    font-size: 26px;
+  }
+}
+</style>
