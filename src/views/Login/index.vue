@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar class="nav-bar" title="登录" />
+    <van-nav-bar class="nav-bar" title="登录"/>
 
     <van-form ref="form" class="form" @submit="onSubmit">
       <!--手机号-->
@@ -24,7 +24,7 @@
         <!--        字体图标-->
         <template #label>
           <span class="toutiao toutiao-yanzhengma"></span
-        ></template>
+          ></template>
 
         <!--        发送验证码-->
         <template #button>
@@ -37,7 +37,7 @@
             size="small"
             type="default"
             @click="sendCode"
-            >发送验证码
+          >发送验证码
           </van-button>
 
           <!--          发送倒计时-->
@@ -76,6 +76,13 @@ export default {
     }
   },
   methods: {
+    loading () {
+      this.$toast.loading({
+        message: '加载中',
+        forbidClick: true,
+        duration: 0
+      })
+    },
     ...mapMutations(['SET_TOKEN']),
     // 表单校验通过后触发
     async onSubmit () {
@@ -101,13 +108,7 @@ export default {
         }
       }
     },
-    loading () {
-      this.$toast.loading({
-        message: '加载中',
-        forbidClick: true,
-        duration: 0
-      })
-    },
+
     async sendCode () {
       // 验证用户是否输入有效手机号
       //  - form绑定ref
