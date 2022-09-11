@@ -12,7 +12,7 @@ const routes = [
     children: [
       {
         path: '/ ',
-        component: () => import('@/views/Home')
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Home')
       },
       {
         path: '/video',
@@ -24,7 +24,7 @@ const routes = [
       },
       {
         path: '/profile',
-        component: () => import('@/views/My')
+        component: () => import(/* webpackChunkName: "user" */ '@/views/My')
       }
     ]
   },
