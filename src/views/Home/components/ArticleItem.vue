@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import dayjs from '@/utils/dayjs'
+
 export default {
   name: 'ArticleItem',
   props: {
@@ -42,7 +44,7 @@ export default {
     /* eslint-disable */
     label() {
       const { aut_name, comm_count, pubdate } = this.article;
-      return `${aut_name} ${comm_count}评论 ${pubdate}`;
+      return `${aut_name} ${comm_count}评论 ${dayjs(pubdate).fromNow()}`;
     },
   },
 };

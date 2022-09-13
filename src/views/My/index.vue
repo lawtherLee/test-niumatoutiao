@@ -112,13 +112,17 @@ export default {
     }
   },
   methods: {
+    // 退出弹窗提示
     async logout () {
-      await this.$dialog.confirm({
-        title: '黑马头条',
-        message: '确认退出吗'
-      })
-      this.$store.commit('SET_TOKEN', {})
+      try {
+        await this.$dialog.confirm({
+          title: '黑马头条',
+          message: '确认退出吗'
+        })
+        this.$store.commit('SET_TOKEN', {})
+      } catch (err) {}
     },
+
     async getUserInfo () {
       try {
         // 用户登录了继续
