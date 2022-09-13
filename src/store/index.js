@@ -34,7 +34,5 @@ export default new Vuex.Store({
     SET_TOKEN (state, token) {
       state.tokenObj = token
     }
-  },
-  actions: {},
-  modules: {}
+  }
 })

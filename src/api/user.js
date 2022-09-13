@@ -27,6 +27,7 @@ export const sendCodeAPI = (mobile) => {
 export const getUserInfoAPI = () => {
   return request({
     url: '/v1_0/user'
+    // 在axios里统一配置请求头
     // headers: {
     //   Authorization: `Bearer ${store.state.tokenObj.token}`
     // }

@@ -13,8 +13,22 @@
         <!--        文章详情-->
         <article-list :id="item.id"></article-list>
       </van-tab>
-      <span class="toutiao toutiao-gengduo"></span>
+      <span class="toutiao toutiao-gengduo" @click="isShow = true"></span>
     </van-tabs>
+
+    <!--    弹出层-->
+    <van-popup
+      v-model="isShow"
+      :style="{ height: '100%' }"
+      close-icon-position="top-left"
+      closeable
+      position="bottom"
+    >
+      <channel-edit
+        :my-channels="channels"
+        @change-active="[(isShow = false), (active = $event)]"
+      ></channel-edit>
+    </van-popup>
   </div>
 </template>
 
@@ -24,19 +38,25 @@
 // 引入API
 import { getChannelAPI } from '@/api'
 import ArticleList from '@/views/Home/components/ArticleList'
+import ChannelEdit from '@/views/Home/components/ChannelEdit'
 
 export default {
   name: 'index',
-  components: { ArticleList },
+
+  components: { ArticleList, ChannelEdit },
+
   data () {
     return {
       active: 2,
-      channels: []
+      channels: [],
+      isShow: false
     }
   },
+
   created () {
     this.getChannel()
   },
+
   methods: {
     async getChannel () {
       try {
@@ -47,7 +67,7 @@ export default {
           throw error
         } else {
           const status = error.response.status
-          status === 507 && this.$toast.fail('轻刷新')
+          status === 507 && this.$toast.fail('刷新')
         }
       }
     }
