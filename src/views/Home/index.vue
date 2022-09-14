@@ -7,7 +7,7 @@
       </template>
     </van-nav-bar>
 
-    <!--    选项卡-->
+    <!--    选项卡/内容区-->
     <van-tabs v-model="active" swipeable>
       <van-tab v-for="item in channels" :key="item.id" :title="item.name">
         <!--        文章详情-->
@@ -25,8 +25,11 @@
       position="bottom"
     >
       <channel-edit
+        v-if="isShow"
         :my-channels="channels"
         @change-active="[(isShow = false), (active = $event)]"
+        @del-channel="delChannel"
+        @add-channel="addChannel"
       ></channel-edit>
     </van-popup>
   </div>
@@ -36,16 +39,17 @@
 // 1. ?? 相当于 ｜｜ 常用于语句
 // 2. ?. 可选链操作符，？前面是udf 那不会往后取值
 // 引入API
-import { getChannelAPI } from '@/api'
+import { getChannelAPI, delChannelAPI, addChannelAPI } from '@/api'
 import ArticleList from '@/views/Home/components/ArticleList'
 import ChannelEdit from '@/views/Home/components/ChannelEdit'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'index',
 
   components: { ArticleList, ChannelEdit },
 
-  data () {
+  data() {
     return {
       active: 2,
       channels: [],
@@ -53,12 +57,34 @@ export default {
     }
   },
 
-  created () {
-    this.getChannel()
+  created() {
+    this.initChannels()
+  },
+
+  computed: {
+    ...mapGetters(['isLogin'])
   },
 
   methods: {
-    async getChannel () {
+    ...mapMutations(['SET_MY_CHANNEL']),
+
+    initChannels() {
+      if (this.isLogin) {
+        // 如果登录了 channels发请求获取用户自己的频道
+        this.getChannel()
+      } else {
+        // 如果未登录 本地有数据 channels用本地数据
+        // 没有数据发请求获取默认频道数据
+        const myChannels = this.$store.state.myChannels
+        if (myChannels.length === 0) {
+          this.getChannel()
+        } else {
+          this.channels = myChannels
+        }
+      }
+    },
+
+    async getChannel() {
       try {
         const { data } = await getChannelAPI()
         this.channels = data.data.channels
@@ -67,7 +93,50 @@ export default {
           throw error
         } else {
           const status = error.response.status
-          status === 507 && this.$toast.fail('刷新')
+          status === 507 && this.$toast.fail('服务端异常请刷新')
+        }
+      }
+    },
+
+    // 删除频道
+    async delChannel(id) {
+      try {
+        const newChannels = (this.channels = this.channels.filter(
+          (item) => item.id !== id
+        ))
+        // 1.发送请求删除频道
+        if (this.isLogin) {
+          await delChannelAPI(id)
+        } else {
+          this.SET_MY_CHANNEL(newChannels)
+        }
+        // 2 视图层删除频道
+        this.channels = newChannels
+        this.$toast.success('删除频道成功')
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$toast.fail('请登录在删除')
+        } else {
+          throw error
+        }
+      }
+    },
+
+    // 添加频道
+    async addChannel(channel) {
+      try {
+        if (this.isLogin) {
+          await addChannelAPI(channel.id, this.channels.length)
+        } else {
+          this.SET_MY_CHANNEL([...this.channels, channel])
+        }
+        this.channels.push(channel)
+        this.$toast.success('添加频道成功')
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          this.$toast.fail('请登录在添加')
+        } else {
+          throw error
         }
       }
     }
