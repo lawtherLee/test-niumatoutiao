@@ -54,7 +54,6 @@ export default {
       try {
         const { data } = await getArticles(this.id, +new Date())
         this.articles = data.data.results
-        console.log(data)
         // 保存下一页时间戳 用于分页
         this.preTimestamp = data.data.pre_timestamp
       } catch (error) {
