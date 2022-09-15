@@ -1,7 +1,8 @@
 <template>
   <div>
-    <router-view></router-view>
-
+    <transition mode="out-in" name="van-fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
