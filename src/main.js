@@ -5,8 +5,12 @@ import router from './router'
 import store from './store'
 
 import './styles/fonts/iconfont.css'
+import 'vant/lib/index.css'
+import Vant from 'vant'
+import 'amfe-flexible'
 
 Vue.config.productionTip = false
+Vue.use(Vant)
 
 new Vue({
   router,
