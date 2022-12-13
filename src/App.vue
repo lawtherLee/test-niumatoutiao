@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <h1>牛马头条</h1>
-    <i class="toutiao toutiao-lishi"></i>
+    <router-view></router-view>
   </div>
 </template>
+<script>
+
+export default {}
+</script>
 
 <style lang="scss">
 
