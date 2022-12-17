@@ -4,25 +4,36 @@
       class="page-nav-bar"
       title="登录"
     />
-    <van-form @submit="onSubmit">
+    <van-form ref="loginForm" @submit="onSubmit">
       <van-field
-        v-model="username"
-        label="用户名:"
-        name="用户名"
-        placeholder="用户名"
+        v-model="user.mobile"
+        :rules="userFormRules.mobile"
+        clearable
+        label="手机号:"
+        maxlength="11"
+        name="mobile"
+        placeholder="请输入手机号"
+        required
+        type="number"
       >
         <i slot="left-icon" class="toutiao toutiao-shouji"></i>
       </van-field>
 
       <van-field
-        v-model="password"
-        label="密码:"
-        name="密码"
-        placeholder="密码"
+        v-model="user.code"
+        :rules="userFormRules.code"
+        label="验证码:"
+        maxlength="6"
+        name="code"
+        placeholder="请输入验证码"
+        required
+        type="number"
       >
         <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
         <template #button>
-          <van-button class="send-sms-btn" round size="small" type="default">发送验证码</van-button>
+          <van-button class="send-sms-btn" native-type="button" round size="small" type="default" @click="onSendSms">
+            发送验证码
+          </van-button>
         </template>
       </van-field>
 
@@ -36,20 +47,69 @@
 </template>
 
 <script>
+import { loginAPI } from '@/api/user'
+import { Toast } from 'vant'
+
 export default {
   // eslint-disable-next-line
   name: 'login',
   data () {
     return {
-      username: '',
-      password: ''
+      isCountDownShow: false,
+      user: {
+        mobile: '',
+        code: ''
+      },
+      userFormRules: {
+        mobile: [{
+          required: true,
+          message: '手机号不能为空'
+        }, {
+          pattern: /^(?:(?:\+|00)86)?1[3-9]\d{9}$/,
+          message: '手机格式错误'
+        }],
+        code: [{
+          required: true,
+          message: '验证码不能为空'
+        }, {
+          pattern: /^\d{6}$/,
+          message: '验证码格式错误'
+        }]
+      }
+
     }
   },
   methods: {
-    onSubmit (val) {
-      console.log(val)
+    async onSubmit () {
+      Toast({
+        duration: 0,
+        forbidClick: true,
+        message: 'loading...'
+      })
+      try {
+        const user = this.user
+        const res = await loginAPI(user)
+        Toast.success('登录成功')
+        console.log('登录成功', res)
+      } catch (err) {
+        console.log('登录失败', err)
+        if (err.response.status === 400) {
+          Toast.fail('手机号或验证码错误')
+        } else {
+          Toast.fail('登录失败')
+        }
+      }
+    },
+    // 发送验证码
+    async onSendSms () {
+      try {
+        await this.$refs.loginForm.validate('mobile')
+      } catch (err) {
+        return console.log('验证失败', err)
+      }
     }
   }
+
 }
 </script>
 
