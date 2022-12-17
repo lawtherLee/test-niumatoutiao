@@ -30,16 +30,21 @@
         type="number"
       >
         <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
-        <template #button>
-          <van-button class="send-sms-btn" native-type="button" round size="small" type="default" @click="onSendSms">
-            发送验证码
+        <template v-if="isCountDownShow" v-slot:button>
+          <van-count-down :time="1000 * 5" format="sss"
+                          @finish="isCountDownShow = false"/>
+        </template>
+        <template v-else v-slot:button>
+          <van-button class="send-sms-btn" native-type="button" round size="small" type="primary"
+                      @click="onSendSmsCode"> 发送验证码
           </van-button>
         </template>
+
       </van-field>
 
       <!--      提交按钮-->
       <div class="login-btn-wrap">
-        <van-button block class="login-btn" native-type="submit" type="info">提交</van-button>
+        <van-button block class="login-btn" native-type="submit" type="info">登录</van-button>
       </div>
       <!--/      提交按钮-->
     </van-form>
@@ -47,7 +52,7 @@
 </template>
 
 <script>
-import { loginAPI } from '@/api/user'
+import { getSmsCodeAPI, loginAPI } from '@/api/user'
 import { Toast } from 'vant'
 
 export default {
@@ -80,6 +85,7 @@ export default {
     }
   },
   methods: {
+    // 登录
     async onSubmit () {
       Toast({
         duration: 0,
@@ -101,11 +107,23 @@ export default {
       }
     },
     // 发送验证码
-    async onSendSms () {
+    async onSendSmsCode () {
       try {
         await this.$refs.loginForm.validate('mobile')
       } catch (err) {
         return console.log('验证失败', err)
+      }
+      this.isCountDownShow = true
+      try {
+        await getSmsCodeAPI(this.user.mobile)
+        this.$toast('发送成功')
+      } catch (err) {
+        this.isCountDownShow = false
+        if (err.response.status === 429) {
+          this.$toast('发送太频繁了')
+        } else {
+          this.$toast('发送失败')
+        }
       }
     }
   }
@@ -124,6 +142,7 @@ export default {
   }
 
   .send-sms-btn {
+    border: 0;
     width: 170px;
     height: 46px;
     line-height: 46px;
