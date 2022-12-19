@@ -96,6 +96,7 @@ export default {
         const user = this.user
         const res = await loginAPI(user)
         Toast.success('登录成功')
+        this.$store.commit('SET_TOKEN', res.data.data)
         console.log('登录成功', res)
       } catch (err) {
         console.log('登录失败', err)
