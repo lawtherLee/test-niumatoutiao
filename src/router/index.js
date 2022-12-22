@@ -12,7 +12,29 @@ const routes = [
   {
     path: '/',
     name: 'layout',
-    component: () => import('@/views/layout')
+    component: () => import('@/views/layout'),
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/views/Home')
+      },
+      {
+        path: 'qa',
+        name: 'qa',
+        component: () => import('@/views/QA')
+      },
+      {
+        path: 'video',
+        name: 'video',
+        component: () => import('@/views/Video')
+      },
+      {
+        path: 'my',
+        name: 'my',
+        component: () => import('@/views/My')
+      }
+    ]
   }
 ]
 

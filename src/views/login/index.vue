@@ -1,9 +1,10 @@
 <template>
   <div class="login-container">
-    <van-nav-bar
-      class="page-nav-bar"
-      title="登录"
-    />
+    <van-nav-bar class="page-nav" title="登录">
+      <template #left>
+        <van-icon name="cross" @click="$router.back()"/>
+      </template>
+    </van-nav-bar>
     <van-form ref="loginForm" @submit="onSubmit">
       <van-field
         v-model="user.mobile"
@@ -136,6 +137,15 @@ export default {
 .login-container {
   ::v-deep .van-field__label {
     width: 4.9em !important;
+  }
+
+  .page-nav {
+    background-color: #3296fa;
+    color: white !important;
+
+    .van-nav-bar__title, .van-icon {
+      color: #fff !important;
+    }
   }
 
   .toutiao {
