@@ -5,7 +5,7 @@
 
     <!--    标签栏-->
     <van-tabbar class="layout-tabbar" route>
-      <van-tabbar-item class="item" to="/">
+      <van-tabbar-item class="item" to="/ ">
         <span class="text">首页</span>
         <template v-slot:icon>
           <i class="toutiao toutiao-shouye"></i>

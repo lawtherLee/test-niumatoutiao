@@ -113,7 +113,7 @@ export default {
 
     .base {
       height: 231px;
-      padding: 76px 32px 23px;
+      //padding: 76px 32px 23px;
       display: flex;
       justify-content: space-between;
       align-items: center;
