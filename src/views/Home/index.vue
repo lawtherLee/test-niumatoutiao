@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'HomePage',
+  name: 'Home',
   components: {},
   props: {},
   data () {

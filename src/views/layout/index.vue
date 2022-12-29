@@ -11,19 +11,22 @@
           <i class="toutiao toutiao-shouye"></i>
         </template>
       </van-tabbar-item>
+
       <van-tabbar-item class="item" to="/qa">
         <span class="text">问答</span>
         <template v-slot:icon>
           <i class="toutiao toutiao-wenda"></i>
         </template>
       </van-tabbar-item>
+
       <van-tabbar-item class="item" to="/video">
         <span class="text">视频</span>
         <template v-slot:icon>
           <i class="toutiao toutiao-shipin"></i>
         </template>
       </van-tabbar-item>
-      <van-tabbar-item class="item" to="my">
+
+      <van-tabbar-item class="item" to="/my">
         <span class="text">我的</span>
         <template v-slot:icon>
           <i class="toutiao toutiao-wode"></i>
