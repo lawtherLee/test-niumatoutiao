@@ -46,7 +46,7 @@
         @click="$router.push('/login')">
     </div>
 
-    <div :column-num="2" class="nav-grid" clickable>
+    <van-grid class="nav-grid" clickable column-num="2">
       <van-grid-item text="收藏">
         <i slot="icon" class="toutiao toutiao-shoucang"></i>
         <span slot="text" class="text">收藏</span>
@@ -55,13 +55,17 @@
         <i slot="icon" class="toutiao toutiao-lishi"></i>
         <span slot="text" class="text">历史</span>
       </van-grid-item>
+    </van-grid>
+
+    <div class="link">
+      <van-cell is-link title="消息通知"/>
+      <van-cell is-link title="小智同学"/>
     </div>
 
-    <van-cell is-link title="消息通知" url=""/>
-    <van-cell is-link title="实名认证" url=""/>
-    <van-cell is-link title="用户反馈" url=""/>
-    <van-cell is-link title="小智同学" url=""/>
-    <van-cell is-link title="系统设置" url=""/>
+    <footer style="margin: 10px 0; width: 100%; ">
+      <van-button v-if="isLogin" block style="color: red; border: 0" @click="logout">退出</van-button>
+    </footer>
+
   </div>
 </template>
 
@@ -80,8 +84,13 @@ export default {
   created () {
   },
   mounted () {
+
   },
-  methods: {}
+  methods: {
+    logout () {
+      console.log(1)
+    }
+  }
 }
 </script>
 
@@ -110,33 +119,11 @@ export default {
 
   .userInfo {
     background: #5999f3;
-
-    .base {
-      height: 231px;
-      //padding: 76px 32px 23px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-sizing: border-box;
-
-      .left {
-        display: flex;
-        align-items: center;
-
-        .avatar {
-          width: 132px;
-          height: 132px;
-          border: 2px solid #fff;
-        }
-
-        .name {
-          font-size: 29px;
-          margin-left: 22px;
-        }
-      }
-    }
+    display: flex;
+    flex-wrap: wrap;
 
     .data {
+      width: 100%;
       display: flex;
       justify-content: space-around;
 
@@ -158,6 +145,34 @@ export default {
         }
       }
     }
+
+    .base {
+      width: 700px;
+      height: 231px;
+      padding: 76px 32px 23px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+
+      .left {
+        display: flex;
+        align-items: center;
+
+        .avatar {
+          width: 132px;
+          height: 132px;
+          border: 2px solid #fff;
+        }
+
+        .name {
+          font-size: 29px;
+          margin-left: 22px;
+          color: white;
+        }
+      }
+    }
+
   }
 
   .nav-grid {
@@ -180,6 +195,13 @@ export default {
       margin-top: 8px;
       font-size: 28px;
     }
+  }
+
+  .logout-cell {
+    text-align: center;
+    color: #EB5253;
+    margin: 10px 0;
+    font-size: 30px;
   }
 }
 </style>
