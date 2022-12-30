@@ -15,6 +15,12 @@
           v-for="item in articles"
           :key="item.id"
           :article="item"
+          @goDetail="
+            $router.push({
+              path: '/detail',
+              query: { articleID: item.art_id },
+            })
+          "
         ></article-item>
       </van-list>
     </van-pull-refresh>

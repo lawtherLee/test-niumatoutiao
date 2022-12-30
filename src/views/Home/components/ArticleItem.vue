@@ -5,17 +5,19 @@
       v-if="article.cover.type === 0"
       :label="label"
       :title="article.title"
+      @click="$emit('goDetail')"
     />
     <!--    一张图片-->
     <van-cell
       v-else-if="article.cover.type === 1"
       :label="label"
       :title="article.title"
+      @click="$emit('goDetail')"
     >
       <van-image :src="article.cover.images[0]" height="100" width="100" />
     </van-cell>
     <!--    三张图片-->
-    <van-cell v-else :title="article.title">
+    <van-cell v-else :title="article.title" @click="$emit('goDetail')">
       <template #label>
         <van-image
           v-for="(item, index) in article.cover.images"

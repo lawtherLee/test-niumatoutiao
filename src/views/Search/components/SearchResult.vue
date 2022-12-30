@@ -56,6 +56,7 @@ export default {
           this.perPage,
           this.keywords
         )
+        console.log(data)
         const results = data.data.results
         if (results.length === 0) {
           this.finished = true

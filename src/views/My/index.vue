@@ -18,6 +18,7 @@
               <!--              用户头像-->
               <van-image
                 :src="userInfo.photo"
+                class="userImg"
                 height="1.5rem"
                 round
                 width="1.5rem"
@@ -36,7 +37,11 @@
               style="height: 100%"
               type="flex"
             >
-              <van-button class="edit-btn" round size="mini"
+              <van-button
+                class="edit-btn"
+                round
+                size="mini"
+                @click="$router.push('/user')"
                 >编辑按钮
               </van-button>
             </van-row>
@@ -197,9 +202,14 @@ export default {
     flex: 1;
   }
 
+  .userImg {
+    margin-left: 10px;
+  }
+
   .mobile {
     font-size: 30px;
     color: white;
+    margin-right: 50px;
   }
 
   .van-col {
