@@ -56,7 +56,7 @@ export default {
 
   components: { ArticleList, ChannelEdit },
 
-  data() {
+  data () {
     return {
       active: 2,
       channels: [],
@@ -64,7 +64,7 @@ export default {
     }
   },
 
-  created() {
+  created () {
     this.initChannels()
   },
 
@@ -75,7 +75,7 @@ export default {
   methods: {
     ...mapMutations(['SET_MY_CHANNEL']),
 
-    initChannels() {
+    initChannels () {
       if (this.isLogin) {
         // 如果登录了 channels发请求获取用户自己的频道
         this.getChannel()
@@ -91,7 +91,7 @@ export default {
       }
     },
 
-    async getChannel() {
+    async getChannel () {
       try {
         const { data } = await getChannelAPI()
         this.channels = data.data.channels
@@ -106,7 +106,7 @@ export default {
     },
 
     // 删除频道
-    async delChannel(id) {
+    async delChannel (id) {
       try {
         const newChannels = (this.channels = this.channels.filter(
           (item) => item.id !== id
@@ -130,7 +130,7 @@ export default {
     },
 
     // 添加频道
-    async addChannel(channel) {
+    async addChannel (channel) {
       try {
         if (this.isLogin) {
           await addChannelAPI(channel.id, this.channels.length)
