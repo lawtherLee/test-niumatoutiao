@@ -82,7 +82,6 @@ export default {
           message: '验证码格式错误'
         }]
       }
-
     }
   },
   methods: {
@@ -99,6 +98,7 @@ export default {
         Toast.success('登录成功')
         this.$store.commit('SET_TOKEN', res.data.data)
         console.log('登录成功', res)
+        await this.$router.push('/my')
       } catch (err) {
         console.log('登录失败', err)
         if (err.response.status === 400) {

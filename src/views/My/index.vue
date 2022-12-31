@@ -6,12 +6,12 @@
       <div class="base">
         <div class="left">
           <van-image
+            :src='userinfo.photo'
             class="avatar"
             fit="cover"
             round
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
           />
-          <span class="name">黑马头条</span>
+          <span class="name">{{ userinfo.name }}</span>
         </div>
         <div class="right">
           <van-button round size="mini" type="default">编辑资料</van-button>
@@ -20,19 +20,19 @@
       <!-- 粉丝、关注 -->
       <div class="data">
         <div class="data-item">
-          <span>90</span>
+          <span>{{ userinfo.art_count }}</span>
           <span>头条</span>
         </div>
         <div class="data-item">
-          <span>90</span>
+          <span>{{ userinfo.follow_count }}</span>
           <span>关注</span>
         </div>
         <div class="data-item">
-          <span>90</span>
+          <span>{{ userinfo.fans_count }}</span>
           <span>粉丝</span>
         </div>
         <div class="data-item">
-          <span>90</span>
+          <span>{{ userinfo.like_count }}</span>
           <span>获赞</span>
         </div>
       </div>
@@ -70,25 +70,53 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex'
+import { getUserinfoAPI } from '@/api/user'
+
 export default {
   name: 'MyPage',
   components: {},
   props: {},
   data () {
     return {
-      isLogin: true
+      isLogin: true,
+      userinfo: {}
     }
   },
-  computed: {},
+  computed: {
+    ...mapState(['user']),
+    ...mapGetters({ isToken: 'isLogin' })
+  },
   watch: {},
   created () {
+    if (this.isToken) {
+      this.loadUserinfo()
+    }
   },
   mounted () {
 
   },
   methods: {
-    logout () {
-      console.log(1)
+    // 退出
+    async logout () {
+      try {
+        await this.$dialog.confirm({
+          title: '确认退出吗？'
+        })
+        this.$store.commit('SET_TOKEN', null)
+        this.isLogin = false
+      } catch (e) {
+      }
+    },
+    // 获取用户信息
+    async loadUserinfo () {
+      try {
+        const { data } = await getUserinfoAPI()
+        console.log(data)
+        this.userinfo = data.data
+      } catch (e) {
+        console.log('获取用户信息失败', e)
+      }
     }
   }
 }

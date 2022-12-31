@@ -21,3 +21,13 @@ export const getSmsCodeAPI = mobile => request({
   method: 'GET',
   url: `/v1_0/sms/codes/${mobile}`
 })
+
+/**
+ * 获取用户信息
+ * @returns {*}
+ */
+export const getUserinfoAPI = () => {
+  return request({
+    url: '/v1_0/user/'
+  })
+}
