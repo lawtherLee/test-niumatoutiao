@@ -42,7 +42,7 @@
                 round
                 size="mini"
                 @click="$router.push('/user')"
-                >编辑按钮
+              >编辑按钮
               </van-button>
             </van-row>
           </van-col>
@@ -68,7 +68,7 @@
 
       <!--      未登录状态的结构-->
       <div v-else class="logout banner" @click="$router.push('/login')">
-        <van-image :src="mobileSrc" height="1.76rem" width="1.76rem" />
+        <van-image :src="mobileSrc" height="1.76rem" width="1.76rem"/>
         <span class="text">登录 / 注册</span>
       </div>
     </header>
@@ -89,15 +89,15 @@
       </van-grid>
 
       <div class="link">
-        <van-cell is-link title="消息通知" />
-        <van-cell is-link title="小志同学" />
+        <van-cell is-link title="消息通知"/>
+        <van-cell is-link title="小志同学"/>
       </div>
     </main>
 
     <!--    底部退出-->
     <footer>
       <van-button v-if="isLogin" block style="color: red" @click="logout"
-        >退出
+      >退出
       </van-button>
     </footer>
   </div>
@@ -125,7 +125,8 @@ export default {
           message: '确认退出吗'
         })
         this.$store.commit('SET_TOKEN', {})
-      } catch (err) {}
+      } catch (err) {
+      }
     },
 
     async getUserInfo () {
@@ -176,7 +177,7 @@ export default {
 }
 
 .banner {
-  background: url("../../assets/images/banner.png") no-repeat 0 0 / cover;
+  background: url("@/assets/images/banner.png") no-repeat 0 0 / cover;
   height: 5.33333rem;
   width: 100%;
 }
