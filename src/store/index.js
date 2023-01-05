@@ -39,6 +39,7 @@ export default new Vuex.Store({
 
     /**
      *
+     * @param state
      * @param {Array} channels 删除或添加后最新的channels
      */
     SET_MY_CHANNEL (state, channels) {

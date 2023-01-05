@@ -93,7 +93,7 @@ export default {
         const { data } = await login(this.mobile, this.code)
         this.SET_TOKEN(data.data)
         // 跳转页面
-        this.$router.push('/profile')
+        await this.$router.push('/profile')
         // 成功的提示s
         this.$toast.success('登录成功')
       } catch (error) {
