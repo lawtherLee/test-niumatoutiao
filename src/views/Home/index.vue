@@ -9,7 +9,7 @@
           round
           size="small"
           @click="$router.push('/search')"
-          >搜索
+        >搜索
         </van-button>
       </template>
     </van-nav-bar>
@@ -58,7 +58,7 @@ export default {
 
   data () {
     return {
-      active: 2,
+      active: 0,
       channels: [],
       isShow: false
     }
